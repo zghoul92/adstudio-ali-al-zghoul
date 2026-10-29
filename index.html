@@ -52,6 +52,41 @@
 <div class="result" id="result"><b>ملاحظات قبل النشر</b><p>راجع تفاصيل المنتج والشعار والكتابات بدقة. نماذج توليد الصور قد تغيّر التفاصيل الصغيرة حتى عند استخدام صورة مرجعية.</p></div>
 </div>
 </section>
+
+<section class="panel" id="promptLab" style="margin-top:20px">
+<h2>مختبر البرومبتات الاحترافية ✦</h2>
+<p class="hint">قوالب عملية مستوحاة من أساليب الإعلان التجاري: وضوح المنتج، نقطة تركيز واحدة، إضاءة مقصودة، مساحة للنص، وخلفية تخدم المنتج. اختر قالبًا لتعبئة وصفك ثم عدّله بما يناسب علامتك.</p>
+<div class="two">
+<div class="field"><label for="industry">نوع المنتج</label><select id="industry"><option>حذاء أو أزياء</option><option>عطر أو مستحضرات تجميل</option><option>إلكترونيات</option><option>طعام أو مشروب</option><option>أثاث أو ديكور</option><option>منتج عام</option></select></div>
+<div class="field"><label for="campaign">هدف الإعلان</label><select id="campaign"><option>إعلان فاخر لبناء قيمة العلامة</option><option>عرض ترويجي يجذب الانتباه</option><option>إعلان نظيف لمتجر إلكتروني</option><option>حملة موسمية سينمائية</option><option>إعلان اجتماعي جريء</option></select></div>
+</div>
+<div class="two">
+<button class="btn secondary" id="buildPrompt" type="button">✦ أنشئ برومبت احترافي</button>
+<button class="btn secondary" id="copyPrompt" type="button">نسخ البرومبت</button>
+</div>
+<div class="field"><label for="negativePrompt">تعليمات تجنّب الأخطاء (يمكن نسخها مع البرومبت)</label><textarea id="negativePrompt" rows="3">لا تغيّر شكل المنتج الأصلي أو لونه أو خامته أو عدد أجزائه. لا تضف شعارات أو كتابة مزيفة أو منتجات إضافية. تجنّب التشوهات والضبابية والانعكاسات غير المنطقية والخلفية المزدحمة. اترك مساحة هادئة لإضافة النص يدويًا بعد التوليد.</textarea></div>
+<div class="hint">ملاحظة: البرومبت يساعد على توجيه النموذج لكنه لا يضمن تطابق المنتج أو خلو النتيجة من الأخطاء. أضف العناوين والأسعار والشعار يدويًا في محرر التصميم.</div>
+</section>
+<section class="panel" id="freeTools" style="margin-top:20px">
+<h2>أدوات الذكاء الاصطناعي المجانية</h2>
+<p class="hint">هذه روابط مباشرة لأدوات رسمية. افتح الأداة ثم ألصق البرومبت وارفع صورة المنتج إن كانت الأداة تدعم ذلك. المجاني لا يعني استخدامًا غير محدود؛ قد تتطلب الأدوات تسجيل الدخول وتضع حصصًا أو قيودًا تختلف حسب الحساب والمنطقة.</p>
+<div class="tool-grid">
+<a class="tool-card" href="https://www.canva.com/ai-image-generator/" target="_blank" rel="noopener"><b>Canva AI</b><span>توليد صور وتصميم الإعلان داخل محرر واحد. الخطة المجانية لها حصة استخدام للذكاء الاصطناعي.</span><em>فتح Canva ↗</em></a>
+<a class="tool-card" href="https://gemini.google.com/" target="_blank" rel="noopener"><b>Google Gemini</b><span>ابتكار أفكار إعلانية وتطوير البرومبتات وتوليد/تعديل الصور وفق الميزات المتاحة للحساب.</span><em>فتح Gemini ↗</em></a>
+<a class="tool-card" href="https://designer.microsoft.com/" target="_blank" rel="noopener"><b>Microsoft Designer</b><span>إنشاء صور وتصاميم وتحريرها بالذكاء الاصطناعي مع أرصدة مجانية وحدود استخدام.</span><em>فتح Designer ↗</em></a>
+<a class="tool-card" href="https://www.adobe.com/express/" target="_blank" rel="noopener"><b>Adobe Express</b><span>تركيب إعلان وإضافة النصوص والعناصر وتنسيق المقاسات؛ بعض الميزات والأصول مدفوعة.</span><em>فتح Adobe Express ↗</em></a>
+<a class="tool-card" href="https://huggingface.co/spaces" target="_blank" rel="noopener"><b>Hugging Face Spaces</b><span>استكشاف نماذج وتجارب مفتوحة المصدر. توفر النموذج مجانًا وسرعته يعتمدان على موارد كل مساحة.</span><em>استكشاف النماذج ↗</em></a>
+<a class="tool-card" href="https://www.photopea.com/" target="_blank" rel="noopener"><b>Photopea</b><span>محرر صور يعمل في المتصفح لإضافة النصوص والطبقات واللمسات النهائية؛ ليس مولّد صور AI أساسيًا.</span><em>فتح Photopea ↗</em></a>
+</div>
+</section>
+<style>
+.tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.tool-card{display:flex;flex-direction:column;gap:9px;padding:16px;border:1px solid var(--line);border-radius:13px;background:#fcfbff;color:var(--ink);text-decoration:none;line-height:1.7}
+.tool-card b{font-size:15px}.tool-card span{font-size:12px;color:var(--muted)}.tool-card em{font-size:12px;color:var(--purple);font-style:normal;font-weight:bold}
+.tool-card:hover{border-color:#b9a8f4;transform:translateY(-1px)}
+@media(max-width:500px){.tool-grid{grid-template-columns:1fr}}
+</style>
+
 <div class="footer">© 2026 AdStudio Ali Al-Zghoul · استوديو الإبداع العربي ✦</div>
 </main></div>
 <script type="module">
@@ -85,6 +120,20 @@ $("make").addEventListener("click",async()=>{
  finally{$("make").disabled=false;$("make").textContent="✦ توليد صورة الإعلان بالذكاء الاصطناعي";}
 });
 $("reset").addEventListener("click",()=>{if(generatedUrl&&generatedUrl.startsWith("blob:"))URL.revokeObjectURL(generatedUrl);generatedUrl=null;$("photo").style.display="none";$("poster").classList.remove("generated");$("glyph").style.display="block";$("download").style.display="none";$("result").style.display="none";status("تم مسح النتيجة.","info");});
+
+$("buildPrompt").addEventListener("click",()=>{
+ const product=$("industry").value,goal=$("campaign").value;
+ const scene=product.includes("حذاء")?"اعرض المنتج في تكوين تجاري فاخر مع ملمس واضح وخلفية موسمية راقية":product.includes("عطر")?"قارورة في تكوين فاخر مع انعكاسات زجاج مضبوطة وقطرات خفيفة وإضاءة حواف":product.includes("إلكترونيات")?"تكوين تقني نظيف بخطوط ضوئية دقيقة وانعكاسات واقعية ومساحة سالبة":product.includes("طعام")?"مشهد شهّي بإضاءة جانبية ناعمة وتفاصيل طازجة وملمس واقعي":product.includes("أثاث")?"مشهد داخلي أنيق بإضاءة طبيعية ومواد واقعية وتوازن معماري":"مشهد تجاري راقٍ بخلفية مصممة بعناية وإضاءة استوديو احترافية";
+ const goalText=goal.includes("فاخر")?"لوحة ألوان متناسقة، إضاءة سينمائية راقية، تكوين بسيط يوحي بالجودة العالية":goal.includes("ترويجي")?"تباين واضح وطاقة بصرية قوية مع ترك مساحة فارغة لإضافة السعر والعرض لاحقًا":goal.includes("متجر")?"خلفية نظيفة، ظل طبيعي، المنتج كامل وواضح في مركز الاهتمام":goal.includes("موسمية")?"أجواء موسمية غامرة وعمق ميداني سينمائي مع إبقاء المنتج هو البطل":"تكوين جريء عالي التباين مناسب لمنشورات الشبكات الاجتماعية";
+ const text="أنشئ صورة فوتوغرافية إعلانية احترافية لـ "+product+". "+scene+". الهدف: "+goal+". "+goalText+". جودة حملة تجارية عالمية، إضاءة مدروسة، تفاصيل خامات واقعية، تكوين متوازن، المنتج هو نقطة التركيز الأساسية، خلفية تخدمه ولا تنافسه، عمق ميداني طبيعي، ظلال وانعكاسات منطقية، جودة عالية. استخدم صورة المنتج المرفوعة مرجعًا أساسيًا؛ حافظ قدر الإمكان على الشكل واللون والخامة والنسب والتفاصيل الأصلية ولا تخترع أجزاءً جديدة. لا تضع أي نص أو سعر أو شعار داخل الصورة، واترك مساحة سالبة واضحة لإضافة النص يدويًا. تجنّب التشوهات والتكرار والضبابية والعناصر العشوائية.";
+ $("prompt").value=text;$("prompt").focus();status("تم إنشاء برومبت إعلاني. راجعه وعدّله قبل التوليد.","success");
+});
+$("copyPrompt").addEventListener("click",async()=>{
+ const text=$("prompt").value.trim();if(!text){status("أنشئ البرومبت أولًا ثم انسخه.","error");return;}
+ try{await navigator.clipboard.writeText(text+"\n\nتجنّب: "+$("negativePrompt").value);status("تم نسخ البرومبت وتعليمات تجنّب الأخطاء.","success");}
+ catch(e){$("prompt").focus();$("prompt").select();status("حدد النص وانسخه يدويًا من حقل وصف المشهد.","info");}
+});
+
 updateRatio();
 </script>
 </body></html>
