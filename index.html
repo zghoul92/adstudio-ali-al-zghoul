@@ -99,7 +99,7 @@ import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.m
 const $=id=>document.getElementById(id);
 let imageUrl=null, generatedUrl=null;
 function status(message,kind="info"){const el=$("status");el.textContent=message;el.className="status "+kind;}
-function normalizeWorkerUrl(raw){let s=(raw||"").trim().replace(/\\/$/,"");if(!s)return "";if(!/^https:\\/\\//i.test(s))s="https://"+s;return s;}
+function normalizeWorkerUrl(raw){let s=(raw||"").trim();while(s.endsWith("/"))s=s.slice(0,-1);if(!s)return "";if(!s.toLowerCase().startsWith("https://"))s="https://"+s;return s;}
 async function resizeReferenceImage(file){
  const img=new Image();const source=URL.createObjectURL(file);
  try{
@@ -119,7 +119,7 @@ $("preserve").addEventListener("input",()=>{$("preserveVal").textContent=Number(
 $("name").addEventListener("input",()=>{if(!$("poster").classList.contains("generated"))$("title").textContent=$("name").value.trim()||"تميّز بتفاصيلك";});
 const savedWorker=localStorage.getItem("adstudio-worker-url");if(savedWorker && $("workerUrl"))$("workerUrl").value=savedWorker;
 const saved=localStorage.getItem("adstudio-space-url");if(saved)$("spaceUrl").value=saved;
-$("saveWorker").addEventListener("click",()=>{const url=normalizeWorkerUrl($("workerUrl").value);if(!url){status("أدخل رابط Cloudflare Worker أولًا.","error");return;}if(!/\\.workers\\.dev$/i.test(new URL(url).hostname)){status("تأكد أن الرابط هو رابط Worker الذي ينتهي بـ workers.dev.","error");return;}localStorage.setItem("adstudio-worker-url",url);$("workerUrl").value=url;status("تم حفظ رابط Cloudflare Worker على هذا الجهاز.","success");});
+$("saveWorker").addEventListener("click",()=>{const url=normalizeWorkerUrl($("workerUrl").value);if(!url){status("أدخل رابط Cloudflare Worker أولًا.","error");return;}if(!new URL(url).hostname.toLowerCase().endsWith(".workers.dev")){status("تأكد أن الرابط هو رابط Worker الذي ينتهي بـ workers.dev.","error");return;}localStorage.setItem("adstudio-worker-url",url);$("workerUrl").value=url;status("تم حفظ رابط Cloudflare Worker على هذا الجهاز.","success");});
 $("saveSpace").addEventListener("click",()=>{const url=normalizeSpaceUrl($("spaceUrl").value);if(!url){status("أدخل رابط Hugging Face Space أولاً.","error");return;}localStorage.setItem("adstudio-space-url",url);$("spaceUrl").value=url;status("تم حفظ رابط المحرك على هذا الجهاز. يمكنك الآن تجربة التوليد.","success");});
 $("make").addEventListener("click",async()=>{
  const file=$("image").files?.[0];
@@ -134,7 +134,7 @@ $("make").addEventListener("click",async()=>{
    if(worker){
      const body=new FormData();body.append("prompt",styledPrompt);body.append("format",$("format").value);
      if(file){const smallImage=await resizeReferenceImage(file);body.append("image",smallImage,"product.png");}
-     const response=await fetch(worker.replace(/\\/$/,"")+"/generate",{method:"POST",body});
+     const response=await fetch(worker+"/generate",{method:"POST",body});
      if(!response.ok){let detail="";try{const err=await response.json();detail=err.error||err.detail||"";}catch{}throw new Error(detail||("خطأ من المحرك ("+response.status+")."));}
      const imageBlob=await response.blob();if(!imageBlob.type.startsWith("image/"))throw new Error("لم يرجع المحرك ملف صورة صالحًا.");
      url=URL.createObjectURL(imageBlob);
