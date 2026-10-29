@@ -2,20 +2,89 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#7048f5"><title>AdStudio Ali Al-Zghoul</title>
+<meta name="theme-color" content="#7048f5">
+<title>AdStudio Ali Al-Zghoul — استوديو الإعلانات الذكي</title>
 <style>
-:root{--purple:#7048f5;--ink:#211b3b;--muted:#77738b;--line:#e9e5f2;--bg:#f7f6fc}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif}button,input,textarea,select{font:inherit}.top{height:72px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 5%}.brand{display:flex;align-items:center;gap:12px;font-weight:bold}.logo{background:linear-gradient(135deg,#7048f5,#ad91ff);color:white;padding:12px;border-radius:14px}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:4px}.btn{border:0;background:var(--purple);color:white;border-radius:12px;padding:12px 17px;font-weight:bold;cursor:pointer}.layout{max-width:1250px;margin:auto;padding:28px 4%;display:grid;grid-template-columns:190px 1fr;gap:22px}.side,.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;height:max-content}.nav{padding:12px;border-radius:10px;color:#6e6982}.nav.active{background:#f0ebff;color:var(--purple);font-weight:bold}.welcome{margin-bottom:20px}.welcome h1{font-size:30px;margin:0 0 9px}.welcome p,.hint{color:var(--muted);font-size:13px;line-height:1.8}.hero{background:linear-gradient(120deg,#21134e,#6842d8,#9271ff);color:white;border-radius:20px;padding:25px;margin-bottom:20px}.hero p{line-height:1.8;color:#e5dcff}.workspace{display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel h2{font-size:18px;margin-top:0}.field{margin:15px 0}.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:8px}.field input,.field textarea,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fcfbff}.field textarea{min-height:100px;line-height:1.8}.upload{border:1.5px dashed #c7b9ef;padding:17px;border-radius:12px;text-align:center;background:#faf8ff}.upload input{margin-top:8px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{width:100%}.poster{aspect-ratio:4/5;background:linear-gradient(140deg,#d9d0ff,#f4e5d8);border-radius:12px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}.poster img{position:absolute;width:100%;height:100%;object-fit:cover;inset:0;display:none}.poster:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#160a38db,transparent 75%);pointer-events:none}.glyph{font-size:85px}.copy{position:absolute;z-index:1;bottom:7%;right:7%;left:7%;color:white}.copy small{color:#dffff1}.copy h2{font-size:30px;line-height:1.3;margin:9px 0}.copy p{font-size:13px;line-height:1.8}.cta{display:inline-block;background:#dffff1;color:#194a3a;padding:10px 15px;border-radius:8px;font-size:12px;font-weight:bold}.result{display:none;background:#f8f5ff;padding:14px;border-radius:12px;margin-top:14px;line-height:1.8}.footer{text-align:center;padding:25px;color:#9994aa;font-size:11px}@media(max-width:800px){.layout{grid-template-columns:1fr;padding:16px 3%}.side{display:flex;overflow:auto;padding:8px}.nav{white-space:nowrap}.workspace{grid-template-columns:1fr}.welcome h1{font-size:24px}}@media(max-width:500px){.top{padding:0 3%}.brand{font-size:13px}.two{grid-template-columns:1fr}}
-</style></head>
-<body><header class="top"><div class="brand"><div class="logo">✦</div><div>AdStudio AI<small>Ali Al-Zghoul · استوديو الإعلانات الذكي</small></div></div><button class="btn" onclick="document.querySelector('#prompt').focus()">＋ ابدأ تصميمًا</button></header>
-<div class="layout"><aside class="side"><div class="nav active">✦　إنشاء إعلان</div><div class="nav" onclick="alert('سيتم تفعيل توليد الفيديو في مرحلة لاحقة')">▶　مولّد الفيديو</div><div class="nav" onclick="alert('القوالب الجاهزة قيد التطوير')">▦　قوالب جاهزة</div><div class="nav" onclick="alert('معرض المشاريع قيد التطوير')">▣　مشاريعي</div></aside>
-<main><section class="welcome"><h1>أهلاً بك في استوديو الإبداع ✨</h1><p>حوّل صورة منتجك وفكرتك إلى معاينة إعلانية أنيقة.</p></section>
-<section class="hero"><h2>فكرتك الإعلانية تبدأ من هنا</h2><p>ارفع صورة المنتج، اكتب وصفًا بسيطًا، واختر المقاس والأسلوب لتجهيز مسودة إعلان.</p><button class="btn" style="background:white;color:#5833bd" onclick="document.querySelector('#image').click()">ارفع صورة منتجك ↗</button></section>
-<section class="workspace"><div class="panel"><h2>صمّم إعلانك</h2><div class="field"><label>1. صورة المنتج</label><div class="upload">اضغط لاختيار صورة المنتج<br><input id="image" type="file" accept="image/*"></div></div><div class="field"><label for="name">2. اسم المنتج</label><input id="name" placeholder="مثال: حذاء شتوي أنيق"></div><div class="field"><label for="prompt">3. وصف الإعلان</label><textarea id="prompt" placeholder="مثال: إعلان فاخر بإضاءة سينمائية وخلفية شتوية..."></textarea></div><div class="two"><div class="field"><label>المقاس</label><select id="format"><option value="4/5">منشور 4:5</option><option value="1/1">مربع 1:1</option><option value="9/16">ستوري 9:16</option><option value="16/9">أفقي 16:9</option></select></div><div class="field"><label>الأسلوب</label><select id="style"><option>فاخر وأنيق</option><option>شتوي وسينمائي</option><option>عصري وبسيط</option><option>ألوان جريئة</option></select></div></div><button class="btn full" id="make">✦ إنشاء مسودة الإعلان</button><p class="hint">هذه نسخة أولية للمعاينة والنص. توليد الصور والفيديو الحقيقي يحتاج ربط نموذج أو API بخادم آمن.</p></div>
-<div class="panel"><h2>معاينة التصميم</h2><div class="poster" id="poster"><img id="photo" alt="صورة المنتج"><div class="glyph" id="glyph">✧</div><div class="copy"><small>اختيارك الأجمل يبدأ هنا</small><h2 id="title">تميّز بتفاصيلك</h2><p id="desc">تصميم أنيق يبرز جمال منتجك ويجذب الأنظار.</p><span class="cta">اكتشف المزيد</span></div></div><div class="hint" id="size">منشور عمودي · 4:5</div><div class="result" id="result"><b>✦ اقتراح نص إعلاني</b><p id="adtext"></p><button class="btn" id="copy">نسخ النص</button></div></div></section><div class="footer">© 2026 AdStudio Ali Al-Zghoul · صُنع للإبداع العربي ✦</div></main></div>
-<script>
-const $=id=>document.getElementById(id);let imageUrl;
-$('image').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(imageUrl)URL.revokeObjectURL(imageUrl);imageUrl=URL.createObjectURL(f);$('photo').src=imageUrl;$('photo').style.display='block';$('glyph').style.display='none'});
-$('format').addEventListener('change',()=>{let f=$('format').value;$('poster').style.aspectRatio=f;$('size').textContent=({'4/5':'منشور عمودي · 4:5','1/1':'مربع · 1:1','9/16':'ستوري / ريلز · 9:16','16/9':'أفقي · 16:9'})[f]});
-$('make').addEventListener('click',()=>{let n=$('name').value.trim()||'منتجك المميز',d=$('prompt').value.trim()||'أناقة وجودة في كل تفصيل، اختيرت بعناية لتناسب ذوقك.';$('title').textContent=n;$('desc').textContent=d.length>110?d.slice(0,107)+'…':d;$('adtext').textContent='✨ '+n+' — '+$('style').value+'\n'+d+'\nاختيارك المميز يبدأ من هنا. تواصل معنا لمعرفة المزيد.';$('result').style.display='block'});
-$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('adtext').textContent+'\n#إعلان #تسوق #منتجات');alert('تم نسخ النص الإعلاني')}catch(e){alert('انسخ النص يدويًا إذا لم يعمل النسخ')}});
-</script></body></html>
+:root{--purple:#7048f5;--ink:#211b3b;--muted:#77738b;--line:#e9e5f2;--bg:#f7f6fc;--green:#14866d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}
+.top{height:72px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:12px;font-weight:bold}.logo{background:linear-gradient(135deg,#7048f5,#ad91ff);color:white;padding:12px;border-radius:14px}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.btn{border:0;background:var(--purple);color:white;border-radius:12px;padding:12px 17px;font-weight:bold;cursor:pointer}.btn:disabled{opacity:.55;cursor:wait}.btn.secondary{background:#f0ebff;color:#5833bd}.layout{max-width:1280px;margin:auto;padding:28px 4%;display:grid;grid-template-columns:190px minmax(0,1fr);gap:22px}
+.side,.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;height:max-content}.side{position:sticky;top:92px}.nav{padding:12px;border-radius:10px;color:#6e6982;margin:4px 0}.nav.active{background:#f0ebff;color:var(--purple);font-weight:bold}.welcome{margin-bottom:20px}.welcome h1{font-size:30px;margin:0 0 9px}.welcome p,.hint{color:var(--muted);font-size:13px;line-height:1.8}
+.hero{background:linear-gradient(120deg,#21134e,#6842d8,#9271ff);color:white;border-radius:20px;padding:25px;margin-bottom:20px}.hero p{line-height:1.8;color:#e5dcff}.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}.panel h2{font-size:18px;margin-top:0}
+.field{margin:15px 0}.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:8px}.field input:not([type=file]),.field textarea,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fcfbff}.field textarea{min-height:100px;line-height:1.8}.upload{border:1.5px dashed #c7b9ef;padding:17px;border-radius:12px;text-align:center;background:#faf8ff}.upload input{margin-top:8px;max-width:100%}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{width:100%}
+.poster{aspect-ratio:4/5;background:linear-gradient(140deg,#d9d0ff,#f4e5d8);border-radius:12px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}.poster img{position:absolute;width:100%;height:100%;object-fit:contain;inset:0;display:none}.poster.generated img{object-fit:contain;background:#f4f0ff}.glyph{font-size:85px;color:#7450db}.copy{position:absolute;z-index:1;bottom:7%;right:7%;left:7%;color:white;text-shadow:0 1px 5px #0007}.copy small{color:#dffff1}.copy h2{font-size:30px;line-height:1.3;margin:9px 0}.copy p{font-size:13px;line-height:1.8}.cta{display:inline-block;background:#dffff1;color:#194a3a;padding:10px 15px;border-radius:8px;font-size:12px;font-weight:bold}.poster.generated .copy{display:none}
+.status{display:none;padding:12px;border-radius:10px;margin-top:12px;font-size:13px;line-height:1.7}.status.info{display:block;background:#f0ebff;color:#5833bd}.status.error{display:block;background:#fff0f0;color:#a12828}.status.success{display:block;background:#e9f8f2;color:#126c56}
+.result{display:none;background:#f8f5ff;padding:14px;border-radius:12px;margin-top:14px;line-height:1.8;white-space:pre-wrap}.preview-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.preview-actions a{display:inline-block;text-decoration:none}.setup{background:#fbfaff;border:1px solid #e5defb;border-radius:12px;padding:13px;font-size:12px;line-height:1.8}.setup summary{font-weight:bold;cursor:pointer}.footer{text-align:center;padding:25px;color:#9994aa;font-size:11px}
+@media(max-width:800px){.layout{grid-template-columns:1fr;padding:16px 3%}.side{display:flex;overflow:auto;padding:8px;position:static}.nav{white-space:nowrap}.workspace{grid-template-columns:1fr}.welcome h1{font-size:24px}}@media(max-width:500px){.top{padding:0 3%}.brand{font-size:13px}.two{grid-template-columns:1fr}.hero{padding:19px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="brand"><div class="logo">✦</div><div>AdStudio AI<small>Ali Al-Zghoul · استوديو الإعلانات الذكي</small></div></div><button class="btn" onclick="document.querySelector('#prompt').focus()">＋ ابدأ تصميمًا</button></header>
+<div class="layout">
+<aside class="side"><div class="nav active">✦　إنشاء إعلان</div><div class="nav">◈　توليد صورة بالذكاء الاصطناعي</div><div class="nav">▦　مقاسات الإعلانات</div><div class="nav">↗　تصدير النتيجة</div></aside>
+<main>
+<section class="welcome"><h1>حوّل صورة منتجك إلى إعلان مميز ✨</h1><p>ارفع صورة المنتج، صف المشهد الذي تريده، ودع نموذج الذكاء الاصطناعي ينشئ خلفية إعلانية جديدة مع محاولة الحفاظ على تفاصيل المنتج.</p></section>
+<section class="hero"><h2>استوديو الإعلانات الذكي</h2><p>صورة منتجك هي نقطة البداية. اختر الأسلوب والمقاس، ثم ولّد صورة إعلانية جديدة. لا تتم إضافة نصوص داخل الصورة تلقائيًا لتجنب تشويه الكتابة والشعارات.</p><button class="btn" style="background:white;color:#5833bd" onclick="document.querySelector('#image').click()">ارفع صورة منتجك ↗</button></section>
+<section class="workspace">
+<div class="panel">
+<h2>صمّم إعلانك</h2>
+<div class="field"><label for="image">1. صورة المنتج</label><div class="upload">اختر صورة واضحة للمنتج<br><input id="image" type="file" accept="image/png,image/jpeg,image/webp"></div><p class="hint">لأفضل حفاظ على التفاصيل، ارفع صورة واضحة للمنتج دون نصوص مضافة أو فلاتر قوية.</p></div>
+<div class="field"><label for="name">2. اسم المنتج (اختياري)</label><input id="name" placeholder="مثال: حذاء شتوي أنيق"></div>
+<div class="field"><label for="prompt">3. وصف المشهد الإعلاني</label><textarea id="prompt" placeholder="مثال: حذاء فاخر في مشهد شتوي أنيق، ثلج خفيف وإضاءة سينمائية، مع إبراز الحذاء بوضوح..."></textarea></div>
+<div class="two"><div class="field"><label for="format">مقاس الإعلان</label><select id="format"><option value="منشور 4:5">منشور 4:5</option><option value="مربع 1:1">مربع 1:1</option><option value="ستوري 9:16">ستوري 9:16</option><option value="أفقي 16:9">أفقي 16:9</option></select></div><div class="field"><label for="style">الأسلوب</label><select id="style"><option>فاخر وأنيق</option><option>شتوي وسينمائي</option><option>عصري وبسيط</option><option>ألوان جريئة</option><option>طبيعي وخارجي</option></select></div></div>
+<div class="field"><label for="preserve">الحفاظ على شكل المنتج</label><input id="preserve" type="range" min="0.5" max="1" value="0.85" step="0.05" style="width:100%"><p class="hint">القيمة الحالية: <b id="preserveVal">0.85</b> — القيمة الأعلى تساعد على تشابه أكبر، لكنها لا تضمن تطابق كل التفاصيل.</p></div>
+<button class="btn full" id="make">✦ توليد صورة الإعلان بالذكاء الاصطناعي</button>
+<div class="status" id="status" role="status"></div>
+<details class="setup" style="margin-top:14px"><summary>إعداد محرك الذكاء الاصطناعي (مرة واحدة)</summary>
+<p>الموقع منشور على GitHub Pages، لذلك يحتاج إلى Space منفصل لتشغيل النموذج المفتوح المصدر.</p>
+<div class="field"><label for="spaceUrl">رابط Hugging Face Space</label><input id="spaceUrl" placeholder="https://username-adstudio.hf.space"></div>
+<button class="btn secondary full" id="saveSpace" type="button">حفظ رابط المحرك</button>
+<p class="hint">أنشئ Gradio Space على Hugging Face، ثم ارفع ملفات المجلد <b>hf-space</b> من مستودع GitHub. خطوات الإعداد والتكاليف موضحة في ملف hf-space/README.md.</p>
+</details>
+<p class="hint">توليد الصور يتم على خادم النموذج عند إعداد الرابط أعلاه. لا نعرض معاينة وهمية على أنها نتيجة مولدة.</p>
+</div>
+<div class="panel">
+<h2>معاينة النتيجة</h2>
+<div class="poster" id="poster"><img id="photo" alt="معاينة صورة المنتج"><div class="glyph" id="glyph">✧</div><div class="copy"><small>معاينة أولية فقط</small><h2 id="title">تميّز بتفاصيلك</h2><p id="desc">ستظهر صورة الإعلان الناتجة هنا بعد تشغيل محرك الذكاء الاصطناعي.</p><span class="cta">صورة إعلانية</span></div></div>
+<div class="hint" id="size">المقاس المختار: منشور 4:5</div>
+<div class="preview-actions"><a id="download" class="btn" href="#" download="adstudio-ad.png" style="display:none">تنزيل الصورة</a><button class="btn secondary" id="reset" type="button">مسح النتيجة</button></div>
+<div class="result" id="result"><b>ملاحظات قبل النشر</b><p>راجع تفاصيل المنتج والشعار والكتابات بدقة. نماذج توليد الصور قد تغيّر التفاصيل الصغيرة حتى عند استخدام صورة مرجعية.</p></div>
+</div>
+</section>
+<div class="footer">© 2026 AdStudio Ali Al-Zghoul · استوديو الإبداع العربي ✦</div>
+</main></div>
+<script type="module">
+import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
+const $=id=>document.getElementById(id);
+let imageUrl=null, generatedUrl=null;
+function status(message,kind="info"){const el=$("status");el.textContent=message;el.className="status "+kind;}
+function normalizeSpaceUrl(raw){let s=(raw||"").trim();if(!s)return "";s=s.replace(/\/$/,"");if(s.startsWith("https://huggingface.co/spaces/")){const slug=s.split("/spaces/")[1];if(slug)return "https://"+slug.replace("/","-")+".hf.space";}if(!/^https:\/\//i.test(s))s="https://"+s;return s;}
+function updateRatio(){const f=$("format").value;const ratio={"منشور 4:5":"4/5","مربع 1:1":"1/1","ستوري 9:16":"9/16","أفقي 16:9":"16/9"}[f];$("poster").style.aspectRatio=ratio;$("size").textContent="المقاس المختار: "+f;}
+$("image").addEventListener("change",e=>{const f=e.target.files?.[0];if(!f)return;if(imageUrl)URL.revokeObjectURL(imageUrl);imageUrl=URL.createObjectURL(f);$("photo").src=imageUrl;$("photo").style.display="block";$("poster").classList.remove("generated");$("glyph").style.display="none";$("title").textContent=$("name").value.trim()||"صورة منتجك";$("desc").textContent="معاينة الصورة الأصلية — اضغط توليد لإنشاء مشهد إعلاني بالذكاء الاصطناعي.";});
+$("format").addEventListener("change",updateRatio);
+$("preserve").addEventListener("input",()=>{$("preserveVal").textContent=Number($("preserve").value).toFixed(2)});
+$("name").addEventListener("input",()=>{if(!$("poster").classList.contains("generated"))$("title").textContent=$("name").value.trim()||"تميّز بتفاصيلك";});
+const saved=localStorage.getItem("adstudio-space-url");if(saved)$("spaceUrl").value=saved;
+$("saveSpace").addEventListener("click",()=>{const url=normalizeSpaceUrl($("spaceUrl").value);if(!url){status("أدخل رابط Hugging Face Space أولاً.","error");return;}localStorage.setItem("adstudio-space-url",url);$("spaceUrl").value=url;status("تم حفظ رابط المحرك على هذا الجهاز. يمكنك الآن تجربة التوليد.","success");});
+$("make").addEventListener("click",async()=>{
+ const file=$("image").files?.[0];if(!file){status("يرجى رفع صورة المنتج أولاً.","error");return;}
+ const prompt=$("prompt").value.trim();if(!prompt){status("اكتب وصف المشهد الإعلاني أولاً.","error");return;}
+ const space=normalizeSpaceUrl($("spaceUrl").value||localStorage.getItem("adstudio-space-url"));if(!space){status("الموقع يحتاج إلى ربط محرك نموذج. افتح «إعداد محرك الذكاء الاصطناعي» وأدخل رابط Hugging Face Space بعد نشر ملفات hf-space.","error");return;}
+ $("make").disabled=true;$("make").textContent="⏳ جارٍ توليد الصورة…";status("يجري إرسال الصورة إلى نموذج الذكاء الاصطناعي. قد يستغرق التشغيل الأول وقتًا أطول لتحميل النموذج.","info");
+ try{
+   const client=await Client.connect(space);
+   const result=await client.predict("/generate",[file,prompt,$("style").value,$("format").value,Number($("preserve").value)]);
+   const output=result?.data?.[0];let url="";
+   if(typeof output==="string")url=output;
+   else if(output&&typeof output==="object")url=output.url||output.path||"";
+   if(!url)throw new Error("وصل الرد من المحرك لكن لم أستطع قراءة رابط الصورة الناتجة. تحقق من أن Space يعمل ويعرض endpoint باسم /generate.");
+   if(generatedUrl&&generatedUrl.startsWith("blob:"))URL.revokeObjectURL(generatedUrl);
+   generatedUrl=url;$("photo").src=url;$("photo").style.display="block";$("glyph").style.display="none";$("poster").classList.add("generated");$("download").href=url;$("download").style.display="inline-block";$("result").style.display="block";$("title").textContent=$("name").value.trim()||"إعلانك الجديد";$("desc").textContent=prompt;status("تم توليد الصورة من النموذج. راجع تفاصيل المنتج قبل نشرها.","success");
+ }catch(err){console.error(err);status("لم ينجح التوليد: "+(err?.message||String(err))+". تأكد من نشر Hugging Face Space وانتظر اكتمال Build. إذا ظهر خطأ CORS أو الاتصال، تحقق من أن الـ Space عام ويعمل.","error");}
+ finally{$("make").disabled=false;$("make").textContent="✦ توليد صورة الإعلان بالذكاء الاصطناعي";}
+});
+$("reset").addEventListener("click",()=>{if(generatedUrl&&generatedUrl.startsWith("blob:"))URL.revokeObjectURL(generatedUrl);generatedUrl=null;$("photo").style.display="none";$("poster").classList.remove("generated");$("glyph").style.display="block";$("download").style.display="none";$("result").style.display="none";status("تم مسح النتيجة.","info");});
+updateRatio();
+</script>
+</body></html>
