@@ -37,10 +37,14 @@
 <button class="btn full" id="make">✦ توليد صورة الإعلان بالذكاء الاصطناعي</button>
 <div class="status" id="status" role="status"></div>
 <details class="setup" style="margin-top:14px"><summary>إعداد محرك الذكاء الاصطناعي (مرة واحدة)</summary>
-<p>الموقع منشور على GitHub Pages، لذلك يحتاج إلى Space منفصل لتشغيل النموذج المفتوح المصدر.</p>
-<div class="field"><label for="spaceUrl">رابط Hugging Face Space</label><input id="spaceUrl" placeholder="https://username-adstudio.hf.space"></div>
-<button class="btn secondary full" id="saveSpace" type="button">حفظ رابط المحرك</button>
-<p class="hint">أنشئ Gradio Space على Hugging Face، ثم ارفع ملفات المجلد <b>hf-space</b> من مستودع GitHub. خطوات الإعداد والتكاليف موضحة في ملف hf-space/README.md.</p>
+<p><b>الخيار الموصى به: Cloudflare Workers AI</b> — يدعم التوليد من النص وتعديل صورة المنتج. جهّزنا ملفات المحرك في مجلد cloudflare-worker داخل مستودع GitHub؛ يجب نشر Worker وربط Workers AI أولًا.</p>
+<div class="field"><label for="workerUrl">رابط Cloudflare Worker</label><input id="workerUrl" placeholder="https://adstudio-ai-engine.username.workers.dev"></div>
+<button class="btn secondary full" id="saveWorker" type="button">حفظ رابط Cloudflare</button>
+<p class="hint">استخدم الخطة المجانية فقط. بعد بلوغ الحصة اليومية، قد يتوقف التوليد حتى إعادة تعيين الحصة. لا تفعّل خطة مدفوعة. دليل الإعداد في cloudflare-worker/README.md.</p>
+<hr style="border:0;border-top:1px solid var(--line);margin:14px 0">
+<p class="hint">بديل قديم: يمكنك استخدام Hugging Face Space إذا كان لديك محرك يعمل بالفعل.</p>
+<div class="field"><label for="spaceUrl">رابط Hugging Face Space (اختياري)</label><input id="spaceUrl" placeholder="https://username-adstudio.hf.space"></div>
+<button class="btn secondary full" id="saveSpace" type="button">حفظ رابط Hugging Face</button>
 </details>
 <p class="hint">توليد الصور يتم على خادم النموذج عند إعداد الرابط أعلاه. لا نعرض معاينة وهمية على أنها نتيجة مولدة.</p>
 </div>
@@ -95,29 +99,56 @@ import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.m
 const $=id=>document.getElementById(id);
 let imageUrl=null, generatedUrl=null;
 function status(message,kind="info"){const el=$("status");el.textContent=message;el.className="status "+kind;}
+function normalizeWorkerUrl(raw){let s=(raw||"").trim().replace(/\\/$/,"");if(!s)return "";if(!/^https:\\/\\//i.test(s))s="https://"+s;return s;}
+async function resizeReferenceImage(file){
+ const img=new Image();const source=URL.createObjectURL(file);
+ try{
+  await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=source;});
+  const scale=Math.min(1,480/Math.max(img.naturalWidth,img.naturalHeight));
+  const canvas=document.createElement("canvas");
+  canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));
+  canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height);
+  return await new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error("تعذر ضغط صورة المنتج.")),"image/png"));
+ }finally{URL.revokeObjectURL(source);}
+}
 function normalizeSpaceUrl(raw){let s=(raw||"").trim();if(!s)return "";s=s.replace(/\/$/,"");if(s.startsWith("https://huggingface.co/spaces/")){const slug=s.split("/spaces/")[1];if(slug)return "https://"+slug.replace("/","-")+".hf.space";}if(!/^https:\/\//i.test(s))s="https://"+s;return s;}
 function updateRatio(){const f=$("format").value;const ratio={"منشور 4:5":"4/5","مربع 1:1":"1/1","ستوري 9:16":"9/16","أفقي 16:9":"16/9"}[f];$("poster").style.aspectRatio=ratio;$("size").textContent="المقاس المختار: "+f;}
 $("image").addEventListener("change",e=>{const f=e.target.files?.[0];if(!f)return;if(imageUrl)URL.revokeObjectURL(imageUrl);imageUrl=URL.createObjectURL(f);$("photo").src=imageUrl;$("photo").style.display="block";$("poster").classList.remove("generated");$("glyph").style.display="none";$("title").textContent=$("name").value.trim()||"صورة منتجك";$("desc").textContent="معاينة الصورة الأصلية — اضغط توليد لإنشاء مشهد إعلاني بالذكاء الاصطناعي.";});
 $("format").addEventListener("change",updateRatio);
 $("preserve").addEventListener("input",()=>{$("preserveVal").textContent=Number($("preserve").value).toFixed(2)});
 $("name").addEventListener("input",()=>{if(!$("poster").classList.contains("generated"))$("title").textContent=$("name").value.trim()||"تميّز بتفاصيلك";});
+const savedWorker=localStorage.getItem("adstudio-worker-url");if(savedWorker && $("workerUrl"))$("workerUrl").value=savedWorker;
 const saved=localStorage.getItem("adstudio-space-url");if(saved)$("spaceUrl").value=saved;
+$("saveWorker").addEventListener("click",()=>{const url=normalizeWorkerUrl($("workerUrl").value);if(!url){status("أدخل رابط Cloudflare Worker أولًا.","error");return;}if(!/\\.workers\\.dev$/i.test(new URL(url).hostname)){status("تأكد أن الرابط هو رابط Worker الذي ينتهي بـ workers.dev.","error");return;}localStorage.setItem("adstudio-worker-url",url);$("workerUrl").value=url;status("تم حفظ رابط Cloudflare Worker على هذا الجهاز.","success");});
 $("saveSpace").addEventListener("click",()=>{const url=normalizeSpaceUrl($("spaceUrl").value);if(!url){status("أدخل رابط Hugging Face Space أولاً.","error");return;}localStorage.setItem("adstudio-space-url",url);$("spaceUrl").value=url;status("تم حفظ رابط المحرك على هذا الجهاز. يمكنك الآن تجربة التوليد.","success");});
 $("make").addEventListener("click",async()=>{
- const file=$("image").files?.[0];if(!file){status("يرجى رفع صورة المنتج أولاً.","error");return;}
- const prompt=$("prompt").value.trim();if(!prompt){status("اكتب وصف المشهد الإعلاني أولاً.","error");return;}
- const space=normalizeSpaceUrl($("spaceUrl").value||localStorage.getItem("adstudio-space-url"));if(!space){status("الموقع يحتاج إلى ربط محرك نموذج. افتح «إعداد محرك الذكاء الاصطناعي» وأدخل رابط Hugging Face Space بعد نشر ملفات hf-space.","error");return;}
- $("make").disabled=true;$("make").textContent="⏳ جارٍ توليد الصورة…";status("يجري إرسال الصورة إلى نموذج الذكاء الاصطناعي. قد يستغرق التشغيل الأول وقتًا أطول لتحميل النموذج.","info");
+ const file=$("image").files?.[0];
+ const prompt=$("prompt").value.trim();if(!prompt){status("اكتب وصف المشهد الإعلاني أولًا.","error");return;}
+ const worker=normalizeWorkerUrl($("workerUrl")?.value||localStorage.getItem("adstudio-worker-url"));
+ const space=normalizeSpaceUrl($("spaceUrl")?.value||localStorage.getItem("adstudio-space-url"));
+ if(!worker&&!space){status("اربط محركًا أولًا: انشر Cloudflare Worker من مجلد cloudflare-worker ثم أدخل رابطه في إعدادات المحرك.","error");return;}
+ $("make").disabled=true;$("make").textContent="⏳ جارٍ توليد الصورة…";status(worker?"يجري توليد الصورة عبر Cloudflare Workers AI. قد يستغرق ذلك بعض الوقت.":"يجري إرسال الطلب إلى Hugging Face Space…","info");
  try{
-   const client=await Client.connect(space);
-   const result=await client.predict("/generate",[file,prompt,$("style").value,$("format").value,Number($("preserve").value)]);
-   const output=result?.data?.[0];let url="";
-   if(typeof output==="string")url=output;
-   else if(output&&typeof output==="object")url=output.url||output.path||"";
-   if(!url)throw new Error("وصل الرد من المحرك لكن لم أستطع قراءة رابط الصورة الناتجة. تحقق من أن Space يعمل ويعرض endpoint باسم /generate.");
+   let url="";
+   const styledPrompt=prompt+". أسلوب الإعلان: "+$("style").value+". حافظ قدر الإمكان على الشكل واللون والخامة والنسب الأصلية للمنتج في الصورة المرجعية. لا تضف نصوصًا أو شعارات أو منتجات أخرى.";
+   if(worker){
+     const body=new FormData();body.append("prompt",styledPrompt);body.append("format",$("format").value);
+     if(file){const smallImage=await resizeReferenceImage(file);body.append("image",smallImage,"product.png");}
+     const response=await fetch(worker.replace(/\\/$/,"")+"/generate",{method:"POST",body});
+     if(!response.ok){let detail="";try{const err=await response.json();detail=err.error||err.detail||"";}catch{}throw new Error(detail||("خطأ من المحرك ("+response.status+")."));}
+     const imageBlob=await response.blob();if(!imageBlob.type.startsWith("image/"))throw new Error("لم يرجع المحرك ملف صورة صالحًا.");
+     url=URL.createObjectURL(imageBlob);
+   }else{
+     if(!file)throw new Error("محرك Hugging Face الحالي يحتاج إلى صورة منتج. استخدم Cloudflare Worker للتوليد من النص وحده.");
+     const client=await Client.connect(space);
+     const result=await client.predict("/generate",[file,styledPrompt,$("style").value,$("format").value,Number($("preserve").value)]);
+     const output=result?.data?.[0];
+     if(typeof output==="string")url=output;else if(output&&typeof output==="object")url=output.url||output.path||"";
+     if(!url)throw new Error("لم أستطع قراءة رابط الصورة الناتجة من Space.");
+   }
    if(generatedUrl&&generatedUrl.startsWith("blob:"))URL.revokeObjectURL(generatedUrl);
-   generatedUrl=url;$("photo").src=url;$("photo").style.display="block";$("glyph").style.display="none";$("poster").classList.add("generated");$("download").href=url;$("download").style.display="inline-block";$("result").style.display="block";$("title").textContent=$("name").value.trim()||"إعلانك الجديد";$("desc").textContent=prompt;status("تم توليد الصورة من النموذج. راجع تفاصيل المنتج قبل نشرها.","success");
- }catch(err){console.error(err);status("لم ينجح التوليد: "+(err?.message||String(err))+". تأكد من نشر Hugging Face Space وانتظر اكتمال Build. إذا ظهر خطأ CORS أو الاتصال، تحقق من أن الـ Space عام ويعمل.","error");}
+   generatedUrl=url;$("photo").src=url;$("photo").style.display="block";$("glyph").style.display="none";$("poster").classList.add("generated");$("download").href=url;$("download").style.display="inline-block";$("result").style.display="block";$("title").textContent=$("name").value.trim()||"إعلانك الجديد";$("desc").textContent=prompt;status("اكتمل توليد الصورة. راجع تفاصيل المنتج قبل نشرها.","success");
+ }catch(err){console.error(err);status("لم ينجح التوليد: "+(err?.message||String(err))+". تحقق من رابط المحرك وربط Workers AI والحصة المجانية.","error");}
  finally{$("make").disabled=false;$("make").textContent="✦ توليد صورة الإعلان بالذكاء الاصطناعي";}
 });
 $("reset").addEventListener("click",()=>{if(generatedUrl&&generatedUrl.startsWith("blob:"))URL.revokeObjectURL(generatedUrl);generatedUrl=null;$("photo").style.display="none";$("poster").classList.remove("generated");$("glyph").style.display="block";$("download").style.display="none";$("result").style.display="none";status("تم مسح النتيجة.","info");});
