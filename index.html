@@ -95,7 +95,6 @@
 <div class="footer">© 2026 AdStudio Ali Al-Zghoul · استوديو الإبداع العربي ✦</div>
 </main></div>
 <script type="module">
-import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
 const $=id=>document.getElementById(id);
 let imageUrl=null, generatedUrl=null;
 function status(message,kind="info"){const el=$("status");el.textContent=message;el.className="status "+kind;}
@@ -140,6 +139,7 @@ $("make").addEventListener("click",async()=>{
      url=URL.createObjectURL(imageBlob);
    }else{
      if(!file)throw new Error("محرك Hugging Face الحالي يحتاج إلى صورة منتج. استخدم Cloudflare Worker للتوليد من النص وحده.");
+     const { Client }=await import("https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js");
      const client=await Client.connect(space);
      const result=await client.predict("/generate",[file,styledPrompt,$("style").value,$("format").value,Number($("preserve").value)]);
      const output=result?.data?.[0];
