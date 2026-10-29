@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "adstudio-ai-engine",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-30",
+  "ai": {
+    "binding": "AI"
+  }
+}
