@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#7048f5">
+<link rel="icon" type="image/svg+xml" href="assets/adstudio-logo.svg">
 <title>AdStudio Ali Al-Zghoul — استوديو الإعلانات الذكي</title>
 <style>
 :root{--purple:#7048f5;--ink:#211b3b;--muted:#77738b;--line:#e9e5f2;--bg:#f7f6fc;--green:#14866d}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}
 .top{height:72px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:5}
-.brand{display:flex;align-items:center;gap:12px;font-weight:bold}.logo{background:linear-gradient(135deg,#7048f5,#ad91ff);color:white;padding:12px;border-radius:14px}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:bold}.brand-logo{width:58px;height:58px;object-fit:contain;border-radius:13px;background:#fff}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
 .btn{border:0;background:var(--purple);color:white;border-radius:12px;padding:12px 17px;font-weight:bold;cursor:pointer}.btn:disabled{opacity:.55;cursor:wait}.btn.secondary{background:#f0ebff;color:#5833bd}.layout{max-width:1280px;margin:auto;padding:28px 4%;display:grid;grid-template-columns:190px minmax(0,1fr);gap:22px}
 .side,.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;height:max-content}.side{position:sticky;top:92px}.nav{padding:12px;border-radius:10px;color:#6e6982;margin:4px 0}.nav.active{background:#f0ebff;color:var(--purple);font-weight:bold}.welcome{margin-bottom:20px}.welcome h1{font-size:30px;margin:0 0 9px}.welcome p,.hint{color:var(--muted);font-size:13px;line-height:1.8}
 .hero{background:linear-gradient(120deg,#21134e,#6842d8,#9271ff);color:white;border-radius:20px;padding:25px;margin-bottom:20px}.hero p{line-height:1.8;color:#e5dcff}.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}.panel h2{font-size:18px;margin-top:0}
@@ -20,12 +21,12 @@
 </style>
 </head>
 <body>
-<header class="top"><div class="brand"><div class="logo">✦</div><div>AdStudio AI<small>Ali Al-Zghoul · استوديو الإعلانات الذكي</small></div></div><button class="btn" onclick="document.querySelector('#prompt').focus()">＋ ابدأ تصميمًا</button></header>
+<header class="top"><div class="brand"><img class="brand-logo" src="assets/adstudio-logo.svg" alt="AdStudio Ali Al-Zghoul"><div>AdStudio Ali Al-Zghoul<small>استوديو الإعلانات الذكي · مساحة إبداعية موحّدة</small></div></div><button class="btn" onclick="document.querySelector('#prompt').focus()">＋ ابدأ تصميمًا</button></header>
 <div class="layout">
 <aside class="side"><div class="nav active">✦　إنشاء إعلان</div><div class="nav">◈　توليد صورة بالذكاء الاصطناعي</div><div class="nav">▦　مقاسات الإعلانات</div><div class="nav">↗　تصدير النتيجة</div></aside>
 <main>
 <section class="welcome"><h1>حوّل صورة منتجك إلى إعلان مميز ✨</h1><p>ارفع صورة المنتج، صف المشهد الذي تريده، ودع نموذج الذكاء الاصطناعي ينشئ خلفية إعلانية جديدة مع محاولة الحفاظ على تفاصيل المنتج.</p></section>
-<section class="hero"><h2>استوديو الإعلانات الذكي</h2><p>صورة منتجك هي نقطة البداية. اختر الأسلوب والمقاس، ثم ولّد صورة إعلانية جديدة. لا تتم إضافة نصوص داخل الصورة تلقائيًا لتجنب تشويه الكتابة والشعارات.</p><button class="btn" style="background:white;color:#5833bd" onclick="document.querySelector('#image').click()">ارفع صورة منتجك ↗</button></section>
+<section class="hero"><h2>استوديو الإعلانات الذكي</h2><p>مساحة واحدة تجمع إنشاء الصور، مختبر البرومبتات، ومصادر الأدوات الإبداعية. صورة منتجك هي نقطة البداية. اختر الأسلوب والمقاس، ثم ولّد صورة إعلانية جديدة. لا تتم إضافة نصوص داخل الصورة تلقائيًا لتجنب تشويه الكتابة والشعارات.</p><button class="btn" style="background:white;color:#5833bd" onclick="document.querySelector('#image').click()">ارفع صورة منتجك ↗</button></section>
 <section class="workspace">
 <div class="panel">
 <h2>صمّم إعلانك</h2>
@@ -92,7 +93,7 @@
 @media(max-width:500px){.tool-grid{grid-template-columns:1fr}}
 </style>
 
-<div class="footer">© 2026 AdStudio Ali Al-Zghoul · استوديو الإبداع العربي ✦</div>
+<div class="footer"><img src="assets/adstudio-logo.svg" alt="" style="width:54px;height:54px;object-fit:contain;vertical-align:middle;margin-inline-end:8px">© 2026 AdStudio Ali Al-Zghoul · استوديو الإبداع العربي</div>
 </main></div>
 <script type="module">
 const $=id=>document.getElementById(id);
