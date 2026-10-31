@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+<rect width="1024" height="1024" rx="150" fill="#fff"/>
+<defs><linearGradient id="a" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#00c8ca"/><stop offset="1" stop-color="#00aeb7"/></linearGradient><linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7930ed"/><stop offset="1" stop-color="#5621d8"/></linearGradient></defs>
+<circle cx="405" cy="320" r="165" fill="url(#a)"/><circle cx="620" cy="320" r="165" fill="url(#b)"/>
+<text x="512" y="665" text-anchor="middle" font-family="Arial,sans-serif" font-size="172" font-weight="700" letter-spacing="-8"><tspan fill="#05bfc4">Ad</tspan><tspan fill="#7131e9">Studio</tspan></text>
+<text x="512" y="810" text-anchor="middle" font-family="Georgia,serif" font-size="70" fill="#d4a923">ALI AL-ZGHOUL</text>
+</svg>
