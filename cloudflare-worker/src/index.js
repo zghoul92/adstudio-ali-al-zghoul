@@ -40,7 +40,7 @@ function dimensions(format) {
     case "مربع 1:1": return [1024, 1024];
     case "ستوري 9:16": return [576, 1024];
     case "أفقي 16:9": return [1024, 576];
-    default: return [819, 1024];
+    default: return [832, 1024];
   }
 }
 export default {
