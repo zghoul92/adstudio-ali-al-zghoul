@@ -56,9 +56,6 @@
 <div class="two"><button class="btn secondary full" id="saveWorker" type="button">حفظ رابط Cloudflare</button><button class="btn full" id="testWorker" type="button">اختبار الاتصال</button></div><div class="status" id="connectionStatus" role="status"></div>
 <p class="hint">استخدم الخطة المجانية فقط. حصة Workers AI المجانية الحالية 10,000 Neurons يوميًا؛ عند نفادها تتوقف الطلبات حتى إعادة التعيين. لا تفعّل خطة مدفوعة. <a href="https://developers.cloudflare.com/workers-ai/platform/pricing/" target="_blank" rel="noopener">تفاصيل الحصة الرسمية</a>.</p>
 <hr style="border:0;border-top:1px solid var(--line);margin:14px 0">
-<p class="hint">بديل قديم: يمكنك استخدام Hugging Face Space إذا كان لديك محرك يعمل بالفعل.</p>
-<div class="field"><label for="spaceUrl">رابط Hugging Face Space (اختياري)</label><input id="spaceUrl" placeholder="https://username-adstudio.hf.space"></div>
-<button class="btn secondary full" id="saveSpace" type="button">حفظ رابط Hugging Face</button>
 </details>
 <p class="hint">توليد الصور يتم مباشرة عبر محرك الذكاء الاصطناعي. لا نعرض معاينة وهمية على أنها نتيجة مولدة.</p>
 </div>
@@ -94,7 +91,6 @@
 <a class="tool-card" href="https://gemini.google.com/" target="_blank" rel="noopener"><b>Google Gemini</b><span>ابتكار أفكار إعلانية وتطوير البرومبتات وتوليد/تعديل الصور وفق الميزات المتاحة للحساب.</span><em>فتح Gemini ↗</em></a>
 <a class="tool-card" href="https://designer.microsoft.com/" target="_blank" rel="noopener"><b>Microsoft Designer</b><span>إنشاء صور وتصاميم وتحريرها بالذكاء الاصطناعي مع أرصدة مجانية وحدود استخدام.</span><em>فتح Designer ↗</em></a>
 <a class="tool-card" href="https://www.adobe.com/express/" target="_blank" rel="noopener"><b>Adobe Express</b><span>تركيب إعلان وإضافة النصوص والعناصر وتنسيق المقاسات؛ بعض الميزات والأصول مدفوعة.</span><em>فتح Adobe Express ↗</em></a>
-<a class="tool-card" href="https://huggingface.co/spaces" target="_blank" rel="noopener"><b>Hugging Face Spaces</b><span>استكشاف نماذج وتجارب مفتوحة المصدر. توفر النموذج مجانًا وسرعته يعتمدان على موارد كل مساحة.</span><em>استكشاف النماذج ↗</em></a>
 <a class="tool-card" href="https://www.photopea.com/" target="_blank" rel="noopener"><b>Photopea</b><span>محرر صور يعمل في المتصفح لإضافة النصوص والطبقات واللمسات النهائية؛ ليس مولّد صور AI أساسيًا.</span><em>فتح Photopea ↗</em></a>
 </div>
 </section>
@@ -126,7 +122,6 @@ async function resizeReferenceImage(file){
   return await new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error("تعذر ضغط صورة المنتج.")),"image/png"));
  }finally{URL.revokeObjectURL(source);}
 }
-function normalizeSpaceUrl(raw){let s=(raw||"").trim();if(!s)return "";s=s.replace(/\/$/,"");if(s.startsWith("https://huggingface.co/spaces/")){const slug=s.split("/spaces/")[1];if(slug)return "https://"+slug.replace("/","-")+".hf.space";}if(!/^https:\/\//i.test(s))s="https://"+s;return s;}
 function updateRatio(){const f=$("format").value;const ratio={"منشور 4:5":"4/5","مربع 1:1":"1/1","ستوري 9:16":"9/16","أفقي 16:9":"16/9"}[f];$("poster").style.aspectRatio=ratio;$("size").textContent="المقاس المختار: "+f;}
 $("image").addEventListener("change",e=>{const f=e.target.files?.[0];if(!f)return;if(imageUrl)URL.revokeObjectURL(imageUrl);imageUrl=URL.createObjectURL(f);$("photo").src=imageUrl;$("photo").style.display="block";$("poster").classList.remove("generated");$("glyph").style.display="none";$("title").textContent=$("name").value.trim()||"صورة منتجك";$("desc").textContent="معاينة الصورة الأصلية — اضغط توليد لإنشاء مشهد إعلاني بالذكاء الاصطناعي.";});
 $("format").addEventListener("change",updateRatio);
