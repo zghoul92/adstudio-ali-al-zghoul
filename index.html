@@ -133,12 +133,10 @@ $("format").addEventListener("change",updateRatio);
 $("preserve").addEventListener("input",()=>{$("preserveVal").textContent=Number($("preserve").value).toFixed(2)});
 $("name").addEventListener("input",()=>{if(!$("poster").classList.contains("generated"))$("title").textContent=$("name").value.trim()||"تميّز بتفاصيلك";});
 const DEFAULT_WORKER_URL="https://adstudio-ali-al-zghoul.adstudio-ai-engine.workers.dev";
-const savedWorker=localStorage.getItem("adstudio-worker-url");
-const saved=localStorage.getItem("adstudio-space-url");
 $("make").addEventListener("click",async()=>{
  const file=$("image").files?.[0];
  const prompt=$("prompt").value.trim();if(!prompt){status("اكتب وصف المشهد الإعلاني أولًا.","error");return;}
- const worker=normalizeWorkerUrl(savedWorker||DEFAULT_WORKER_URL);
+ const worker=DEFAULT_WORKER_URL;
  $("make").disabled=true;$("make").textContent="⏳ جارٍ توليد الصورة…";status("يجري توليد الصورة عبر Cloudflare Workers AI. قد يستغرق ذلك بعض الوقت.","info");
  try{
    let url="";
