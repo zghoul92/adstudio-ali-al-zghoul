@@ -1,0 +1,18 @@
+feature,area,priority,original,clone,notes
+Arabic RTL responsive shell,foundation,must,yes,partial,Existing shell needs restructure and accessibility pass
+Unified image and video creator workspace,creator,must,yes,partial,One workspace with mode and provider selectors; no stacked generators
+Text-to-image generation,images,must,yes,yes,Existing Cloudflare Worker image path
+Image-to-image product ad generation,images,must,yes,partial,Existing upload flow; product fidelity and input handling need validation
+Product photoshoot presets,images,must,yes,partial,Build scene presets around existing image endpoint; verify actual conditioning
+Ad copy generation,copy,must,yes,no,Needs an approved free text model/API or local prompt-only assistant mode
+Prompt lab and negative prompts,prompts,should,yes,yes,Current prompt lab exists; improve templates and state handling
+Aspect ratios and style presets,images,should,yes,yes,Existing ratio/style controls
+Asset library,assets,should,yes,no,Needs persistent storage strategy; start with browser-local history if appropriate
+Image editing utilities,tools,should,yes,partial,Only implement browser-side tools with verified behaviour
+Video generation inside AdStudio,video,should,yes,no,Do not activate until an in-site API with a verified free allowance exists
+Voiceover generation,voice,could,yes,no,Needs verified provider and free quota
+Reusable workflows,presets,could,yes,no,Can begin with localStorage presets
+Social scheduling and publishing,distribution,could,yes,no,Requires official platform APIs and permissions
+Usage/quota diagnostics,platform,must,yes,partial,Show Cloudflare engine health and honest quota/error state
+Authentication and teams,platform,could,yes,skip,Not required for current single-user static deployment
+Paid billing,platform,could,yes,skip,Explicitly excluded by user preference
