@@ -35,7 +35,7 @@
 <body>
 <header class="top"><div class="brand"><img class="brand-logo" src="assets/adstudio-logo.svg" alt="AdStudio Ali Al-Zghoul"><div>AdStudio Ali Al-Zghoul<small>استوديو الإعلانات الذكي · مساحة إبداعية موحّدة</small></div></div><button class="btn" onclick="document.querySelector('#prompt').focus()">＋ ابدأ تصميمًا</button></header>
 <div class="layout">
-<aside class="side"><a class="nav active" href="#creator" style="text-decoration:none">✦　إنشاء إعلان</a><a class="nav" href="#promptLab" style="text-decoration:none">✧　مختبر البرومبتات</a><a class="nav" href="#freeTools" style="text-decoration:none">◈　أدوات AI</a><a class="nav" href="#engine" style="text-decoration:none">⚙　إعداد المحرك</a></aside>
+<aside class="side"><a class="nav active" href="#creator" style="text-decoration:none">✦　إنشاء إعلان</a><a class="nav" href="#promptLab" style="text-decoration:none">✧　مختبر البرومبتات</a><a class="nav" href="#freeTools" style="text-decoration:none">◈　أدوات AI</a></aside>
 <main>
 <section class="welcome"><h1>حوّل صورة منتجك إلى إعلان مميز ✨</h1><p>ارفع صورة المنتج، صف المشهد الذي تريده، ودع نموذج الذكاء الاصطناعي ينشئ خلفية إعلانية جديدة مع محاولة الحفاظ على تفاصيل المنتج.</p></section>
 <section class="hero"><h2>استوديو الإعلانات الذكي</h2><p>مساحة واحدة تجمع إنشاء الصور، مختبر البرومبتات، ومصادر الأدوات الإبداعية. صورة منتجك هي نقطة البداية. اختر الأسلوب والمقاس، ثم ولّد صورة إعلانية جديدة. لا تتم إضافة نصوص داخل الصورة تلقائيًا لتجنب تشويه الكتابة والشعارات.</p><button class="btn" style="background:white;color:#5833bd" onclick="document.querySelector('#image').click()">ارفع صورة منتجك ↗</button></section>
@@ -49,7 +49,8 @@
 <div class="field"><label for="preserve">الحفاظ على شكل المنتج</label><input id="preserve" type="range" min="0.5" max="1" value="0.85" step="0.05" style="width:100%"><p class="hint">القيمة الحالية: <b id="preserveVal">0.85</b> — القيمة الأعلى تساعد على تشابه أكبر، لكنها لا تضمن تطابق كل التفاصيل.</p></div>
 <button class="btn full" id="make">✦ توليد صورة الإعلان بالذكاء الاصطناعي</button>
 <div class="status" id="status" role="status"></div>
-<details class="setup" id="engine" style="margin-top:14px"><summary>إعداد محرك الذكاء الاصطناعي (مرة واحدة)</summary>
+<!-- إعدادات المحرك مخفية عن الواجهة العامة؛ يتم استخدام رابط المحرك الافتراضي داخليًا. -->
+<details class="setup" id="engine" hidden style="display:none">
 <p><b>الخيار الموصى به: Cloudflare Workers AI</b> — يدعم التوليد من النص وتعديل صورة المنتج. جهّزنا ملفات المحرك في مجلد cloudflare-worker داخل مستودع GitHub؛ يجب نشر Worker وربط Workers AI أولًا.</p>
 <div class="field"><label for="workerUrl">رابط Cloudflare Worker</label><input id="workerUrl" placeholder="https://adstudio-ai-engine.username.workers.dev"></div>
 <div class="two"><button class="btn secondary full" id="saveWorker" type="button">حفظ رابط Cloudflare</button><button class="btn full" id="testWorker" type="button">اختبار الاتصال</button></div><div class="status" id="connectionStatus" role="status"></div>
@@ -59,7 +60,7 @@
 <div class="field"><label for="spaceUrl">رابط Hugging Face Space (اختياري)</label><input id="spaceUrl" placeholder="https://username-adstudio.hf.space"></div>
 <button class="btn secondary full" id="saveSpace" type="button">حفظ رابط Hugging Face</button>
 </details>
-<p class="hint">توليد الصور يتم على خادم النموذج عند إعداد الرابط أعلاه. لا نعرض معاينة وهمية على أنها نتيجة مولدة.</p>
+<p class="hint">توليد الصور يتم مباشرة عبر محرك الذكاء الاصطناعي. لا نعرض معاينة وهمية على أنها نتيجة مولدة.</p>
 </div>
 <div class="panel">
 <h2>معاينة النتيجة</h2>
@@ -131,18 +132,14 @@ $("image").addEventListener("change",e=>{const f=e.target.files?.[0];if(!f)retur
 $("format").addEventListener("change",updateRatio);
 $("preserve").addEventListener("input",()=>{$("preserveVal").textContent=Number($("preserve").value).toFixed(2)});
 $("name").addEventListener("input",()=>{if(!$("poster").classList.contains("generated"))$("title").textContent=$("name").value.trim()||"تميّز بتفاصيلك";});
-const savedWorker=localStorage.getItem("adstudio-worker-url");if(savedWorker && $("workerUrl"))$("workerUrl").value=savedWorker;
-$("testWorker").addEventListener("click",async()=>{const url=normalizeWorkerUrl($("workerUrl").value||localStorage.getItem("adstudio-worker-url"));if(!url){connectionStatus("أدخل رابط Worker أولًا.","error");return;}try{connectionStatus("جارٍ فحص /health ...","info");const r=await fetch(url+"/health",{method:"GET",headers:{Accept:"application/json"},cache:"no-store"});let data={};try{data=await r.json()}catch{}if(!r.ok)throw new Error(explainHttp(r.status));if(!data.ok)throw new Error(data.error||"استجابة غير متوقعة من المحرك.");if(data.binding!==true)throw new Error("وصلنا إلى Worker، لكن ربط Workers AI باسم AI غير موجود. أضف AI binding في إعدادات Worker.");connectionStatus("الاتصال سليم ✓ المحرك: "+data.service+" — النموذج: "+data.model,"success");}catch(e){connectionStatus("فشل اختبار الاتصال: "+(e.message||e)+" — تأكد من رابط workers.dev الأساسي، وليس رابط معاينة deployment.","error");}});
-const saved=localStorage.getItem("adstudio-space-url");if(saved)$("spaceUrl").value=saved;
-$("saveWorker").addEventListener("click",()=>{const url=normalizeWorkerUrl($("workerUrl").value);if(!url){status("أدخل رابط Cloudflare Worker أولًا.","error");return;}if(!new URL(url).hostname.toLowerCase().endsWith(".workers.dev")){status("تأكد أن الرابط هو رابط Worker الذي ينتهي بـ workers.dev.","error");return;}localStorage.setItem("adstudio-worker-url",url);$("workerUrl").value=url;status("تم حفظ رابط Cloudflare Worker على هذا الجهاز.","success");});
-$("saveSpace").addEventListener("click",()=>{const url=normalizeSpaceUrl($("spaceUrl").value);if(!url){status("أدخل رابط Hugging Face Space أولاً.","error");return;}localStorage.setItem("adstudio-space-url",url);$("spaceUrl").value=url;status("تم حفظ رابط المحرك على هذا الجهاز. يمكنك الآن تجربة التوليد.","success");});
+const DEFAULT_WORKER_URL="https://adstudio-ali-al-zghoul.adstudio-ai-engine.workers.dev";
+const savedWorker=localStorage.getItem("adstudio-worker-url");
+const saved=localStorage.getItem("adstudio-space-url");
 $("make").addEventListener("click",async()=>{
  const file=$("image").files?.[0];
  const prompt=$("prompt").value.trim();if(!prompt){status("اكتب وصف المشهد الإعلاني أولًا.","error");return;}
- const worker=normalizeWorkerUrl($("workerUrl")?.value||localStorage.getItem("adstudio-worker-url"));
- const space=normalizeSpaceUrl($("spaceUrl")?.value||localStorage.getItem("adstudio-space-url"));
- if(!worker&&!space){status("اربط محركًا أولًا: انشر Cloudflare Worker من مجلد cloudflare-worker ثم أدخل رابطه في إعدادات المحرك.","error");return;}
- $("make").disabled=true;$("make").textContent="⏳ جارٍ توليد الصورة…";status(worker?"يجري توليد الصورة عبر Cloudflare Workers AI. قد يستغرق ذلك بعض الوقت.":"يجري إرسال الطلب إلى Hugging Face Space…","info");
+ const worker=normalizeWorkerUrl(savedWorker||DEFAULT_WORKER_URL);
+ $("make").disabled=true;$("make").textContent="⏳ جارٍ توليد الصورة…";status("يجري توليد الصورة عبر Cloudflare Workers AI. قد يستغرق ذلك بعض الوقت.","info");
  try{
    let url="";
    const styledPrompt=(file?"استخدم الصورة المرجعية رقم 0 كمرجع أساسي للمنتج. حافظ قدر الإمكان على شكل المنتج ولونه وخامته ونسبه وتفاصيله الأصلية، وغيّر الخلفية والإضاءة والتكوين حوله فقط. ":"")+prompt+". أسلوب الإعلان: "+$("style").value+". لا تضف نصوصًا أو شعارات أو منتجات أخرى.";
@@ -153,14 +150,6 @@ $("make").addEventListener("click",async()=>{
      if(!response.ok){let detail="";try{const err=await response.json();detail=err.detail?((err.error||"فشل المحرك")+". التفاصيل: "+err.detail):(err.error||"");}catch{}throw new Error(detail||("خطأ من المحرك ("+response.status+")."));}
      const imageBlob=await response.blob();if(!imageBlob.type.startsWith("image/"))throw new Error("لم يرجع المحرك ملف صورة صالحًا.");
      url=URL.createObjectURL(imageBlob);
-   }else{
-     if(!file)throw new Error("محرك Hugging Face الحالي يحتاج إلى صورة منتج. استخدم Cloudflare Worker للتوليد من النص وحده.");
-     const { Client }=await import("https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js");
-     const client=await Client.connect(space);
-     const result=await client.predict("/generate",[file,styledPrompt,$("style").value,$("format").value,Number($("preserve").value)]);
-     const output=result?.data?.[0];
-     if(typeof output==="string")url=output;else if(output&&typeof output==="object")url=output.url||output.path||"";
-     if(!url)throw new Error("لم أستطع قراءة رابط الصورة الناتجة من Space.");
    }
    if(generatedUrl&&generatedUrl.startsWith("blob:"))URL.revokeObjectURL(generatedUrl);
    generatedUrl=url;$("photo").src=url;$("photo").style.display="block";$("glyph").style.display="none";$("poster").classList.add("generated");$("download").href=url;$("download").style.display="inline-block";$("result").style.display="block";$("title").textContent=$("name").value.trim()||"إعلانك الجديد";$("desc").textContent=prompt;status("اكتمل توليد الصورة. راجع تفاصيل المنتج قبل نشرها.","success");
