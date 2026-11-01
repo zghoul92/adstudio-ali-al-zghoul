@@ -145,12 +145,12 @@ $("make").addEventListener("click",async()=>{
  $("make").disabled=true;$("make").textContent="⏳ جارٍ توليد الصورة…";status(worker?"يجري توليد الصورة عبر Cloudflare Workers AI. قد يستغرق ذلك بعض الوقت.":"يجري إرسال الطلب إلى Hugging Face Space…","info");
  try{
    let url="";
-   const styledPrompt=prompt+". أسلوب الإعلان: "+$("style").value+". حافظ قدر الإمكان على الشكل واللون والخامة والنسب الأصلية للمنتج في الصورة المرجعية. لا تضف نصوصًا أو شعارات أو منتجات أخرى.";
+   const styledPrompt=(file?"استخدم الصورة المرجعية رقم 0 كمرجع أساسي للمنتج. حافظ قدر الإمكان على شكل المنتج ولونه وخامته ونسبه وتفاصيله الأصلية، وغيّر الخلفية والإضاءة والتكوين حوله فقط. ":"")+prompt+". أسلوب الإعلان: "+$("style").value+". لا تضف نصوصًا أو شعارات أو منتجات أخرى.";
    if(worker){
      const body=new FormData();body.append("prompt",styledPrompt);body.append("format",$("format").value);
      if(file){const smallImage=await resizeReferenceImage(file);body.append("image",smallImage,"product.png");}
      const response=await fetch(worker+"/generate",{method:"POST",body});
-     if(!response.ok){let detail="";try{const err=await response.json();detail=err.error||err.detail||"";}catch{}throw new Error(detail||("خطأ من المحرك ("+response.status+")."));}
+     if(!response.ok){let detail="";try{const err=await response.json();detail=err.detail?((err.error||"فشل المحرك")+". التفاصيل: "+err.detail):(err.error||"");}catch{}throw new Error(detail||("خطأ من المحرك ("+response.status+")."));}
      const imageBlob=await response.blob();if(!imageBlob.type.startsWith("image/"))throw new Error("لم يرجع المحرك ملف صورة صالحًا.");
      url=URL.createObjectURL(imageBlob);
    }else{
